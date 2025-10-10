@@ -1,0 +1,28 @@
+#include <DHT.h>
+
+#define DHTPIN 7
+#define DHTTYPE DHT11
+#define LED_PIN 13
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_PIN, OUTPUT);
+  dht.begin();
+}
+
+void loop() {
+  float hum = dht.readHumidity();
+  float temp = dht.readTemperature();
+
+  Serial.print("Temperature = ");
+  Serial.println(temp);
+  Serial.print("Humidity = ");
+  Serial.println(hum);
+
+  if (hum > 85 || temp > 32) digitalWrite(LED_PIN, HIGH);
+  else digitalWrite(LED_PIN, LOW);
+
+  delay(1000);
+}
